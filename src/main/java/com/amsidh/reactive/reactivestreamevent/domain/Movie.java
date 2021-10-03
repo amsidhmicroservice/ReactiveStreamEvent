@@ -3,14 +3,16 @@ package com.amsidh.reactive.reactivestreamevent.domain;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
+
 @Document
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Movie {
-    private String id;
+public class Movie implements Serializable {
+    private Long id;
     @NonNull
     private String title;
 }

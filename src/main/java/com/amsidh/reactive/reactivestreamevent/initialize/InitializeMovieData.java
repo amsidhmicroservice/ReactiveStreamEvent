@@ -16,11 +16,11 @@ public class InitializeMovieData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        movieRepository.deleteAll()
+        /*movieRepository.deleteAll()
                 .thenMany(Flux.just("Bazigar", "Hum Apake Hai Kaun", "Diwana", "Koi Mil Gaya", "Daar", "Surfrosh", "Annari", "Monhabate", "Sirf Tum")
                         .map(Movie::new).flatMap(movieRepository::save)
                 ).subscribe(null, null, () -> {
             movieRepository.findAll().subscribe(System.out::println);
-        });
+        });*/
     }
 }
