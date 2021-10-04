@@ -47,6 +47,16 @@ public class MovieController {
         return movieFlux;
     }
 
+    @GetMapping(value = "/webclient/nonstream/{minRange}/{maxRange}")
+    public Flux<Movie> getAllMoviesWebClientNonStream(@PathVariable(name = "minRange") Integer minRange, @PathVariable(name = "maxRange") Integer maxRange) {
+        Long startTime = System.currentTimeMillis();
+        Flux<Movie> movieFlux = this.movieSlowService.getMoviesFromSlowServiceWithWebClient(minRange, maxRange);
+        Long endTime = System.currentTimeMillis();
+        log.info("Time taken to process request with WebClient way is StartTime {} and EndTime {}  and TotalTime {}", startTime, endTime, (endTime - startTime));
+        return movieFlux;
+    }
+
+
     @GetMapping(value = "/resttemplate/{minRange}/{maxRange}", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Movie> getAllMoviesRestTemplate(@PathVariable(name = "minRange") Integer minRange, @PathVariable(name = "maxRange") Integer maxRange) {
         Long startTime = System.currentTimeMillis();
@@ -61,12 +71,7 @@ public class MovieController {
         return movieFlux;
     }
 
-    /*@PostMapping(value = "/ids", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Flux<Movie> getAllMoviesForIds(@RequestBody List<Long> ids) {
-        return this.movieSlowService.getMoviesFromSlowServiceForIds(ids);
-    }*/
-
-    @GetMapping(value = "/resttemplate/nonstream/{minRange}/{maxRange}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/resttemplate/nonstream/{minRange}/{maxRange}")
     public List<Movie> getAllMoviesRestTemplateNonStream(@PathVariable(name = "minRange") Integer minRange, @PathVariable(name = "maxRange") Integer maxRange) {
         Long startTime = System.currentTimeMillis();
 
@@ -81,7 +86,7 @@ public class MovieController {
     }
 
 
-    @GetMapping(value = "/ids/{ids}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/ids/{ids}")
     public List<Movie> getAllMoviesForIds(@PathVariable("ids") List<Long> ids) {
         return this.movieSlowService.getMoviesFromSlowServiceWithRestTemplate(ids);
     }
